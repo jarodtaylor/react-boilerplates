@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "description": "Boilerplate for ReactJS project with hot code reloading",
   "scripts": {
-    "server": "node server.js",
+    "start": "node server.js",
     "lint": "eslint src"
   },
   "repository": {
@@ -21,18 +21,27 @@
     "edit",
     "webpack"
   ],
-  "author": "Jarod Taylor <jarodrtaylor@gmail.com> (http://github.com/gaearon)",
+  "author": "Jarod Taylor <jarodrtaylor@gmail.com> (http://github.com/jarodtaylor)",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/gaearon/react-hot-boilerplate/issues"
+    "url": "https://github.com/gaearon/react-boilerplate/issues"
   },
   "homepage": "https://github.com/gaearon/react-hot-boilerplate",
   "devDependencies": {
     "babel-core": "^5.4.7",
     "babel-eslint": "^3.1.9",
     "babel-loader": "^5.1.2",
+    "babel-plugin-object-assign": "^1.2.1",
+    "css-loader": "^0.15.6",
+    "cssnext": "^1.8.2",
+    "cssnext-loader": "^1.0.1",
     "eslint-plugin-react": "^2.3.0",
+    "extract-text-webpack-plugin": "^0.8.2",
+    "file-loader": "^0.8.4",
+    "postcss-loader": "^0.5.1",
     "react-hot-loader": "^1.2.7",
+    "style-loader": "^0.12.3",
+    "url-loader": "^0.5.6",
     "webpack": "^1.9.6",
     "webpack-dev-server": "^1.8.2"
   },
