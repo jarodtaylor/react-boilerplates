@@ -19,7 +19,9 @@
     "hmr",
     "live",
     "edit",
-    "webpack"
+    "webpack",
+    "postcss",
+    "cssnext"
   ],
   "author": "Jarod Taylor <jarodrtaylor@gmail.com> (http://github.com/jarodtaylor)",
   "license": "MIT",
