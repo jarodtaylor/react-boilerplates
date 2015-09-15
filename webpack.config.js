@@ -1,6 +1,7 @@
 var path = require('path');
 var webpack = require('webpack');
-var cssnext  = require('cssnext');
+var cssnext  = require('postcss-cssnext');
+var postcssImport = require('postcss-import');
 
 module.exports = {
   devtool: 'eval',
@@ -42,7 +43,8 @@ module.exports = {
   },
   postcss: function() {
     return [
-      cssnext()
+      cssnext(),
+      postcssImport()
     ];
   },
   plugins: [
