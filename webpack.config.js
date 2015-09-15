@@ -43,8 +43,12 @@ module.exports = {
   },
   postcss: function() {
     return [
-      cssnext(),
-      postcssImport()
+      postcssImport({
+        onImport: function (files) {
+            files.forEach(this.addDependency);
+        }.bind(this)
+      }),
+      cssnext()
     ];
   },
   plugins: [
