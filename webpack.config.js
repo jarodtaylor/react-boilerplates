@@ -1,6 +1,6 @@
 var path = require('path');
 var webpack = require('webpack');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
+var cssnext  = require('cssnext');
 
 module.exports = {
   devtool: 'eval',
@@ -26,8 +26,7 @@ module.exports = {
       },
       {
         test: /\.css$/,
-        // loader: ExtractTextPlugin.extract("style-loader", "css-loader")
-        loader: "style!css?sourceMap!cssnext"
+        loader: "style-loader!css-loader?sourceMap!postcss-loader"
       },
       {
         test: /\.(png|jpg|svg|gif)$/,
@@ -41,9 +40,13 @@ module.exports = {
 
     ]
   },
+  postcss: function() {
+    return [
+      cssnext()
+    ];
+  },
   plugins: [
     new webpack.HotModuleReplacementPlugin(),
     new webpack.NoErrorsPlugin(),
-    // new ExtractTextPlugin('bundle.css')
   ]
 };

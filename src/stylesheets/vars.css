@@ -1,0 +1,7 @@
+:root {
+  --mainColor: color(red alpha(100%));
+  --fontSize: 1rem;
+  --baseline: 1.5rem;
+  --serif: 'Merriweather', serif;
+  --sansSerif: 'Oswald', sans-serif;
+}
