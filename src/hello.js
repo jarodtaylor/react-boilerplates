@@ -5,11 +5,12 @@ export default class Hello extends Component {
     return (
       <div className="wrapper">
         <h1>Hello, world!</h1>
-        <p>Just another React boilerplate. This boilerplate is as minimalist as can be.</p>
+        <p>Another React boilerplate. This boilerplate is as minimalist as can be.</p>
         <ul className="checklist">
           <li>React JS</li>
           <li>Webpack</li>
           <li>Babel</li>
+          <li>webpack-dev-server</li>
         </ul>
       </div>
     );
