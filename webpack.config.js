@@ -1,76 +1,52 @@
+const webpack = require('webpack');
 const path = require('path');
-const cssnext  = require('postcss-cssnext');
-const  postcssImport = require('postcss-import');
-const PATHS = {
-  src: path.join(__dirname + '/src'),
-  dist: path.join(__dirname + '/dist'),
-};
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-// The "default" configuration, options that work for both
-// the default build process as well as the development server
-const config = {
-  entry: ['babel-polyfill', path.join(PATHS.src, '/app.js')],
 
-  resolve: {
-    extensions: ['', '.js', '.jsx']
+/* create array of vendor libs to use in split from bundle */
+const VENDOR_LIBS = [
+  'react',
+  'react-dom'
+]
+
+module.exports = {
+  entry: {
+    bundle: './src/app.js', /* bundle.js will contain everything from app.js */
+    vendor: VENDOR_LIBS /* vendor.js will contain all VENDOR_LIBS */
   },
-
   output: {
-    path: PATHS.dist,
-    filename: 'app.js'
+    path: path.resolve(__dirname, 'dist'), /* output all files to /dist directory */
+    filename: '[name].[hash].js' /* add a hash to each filename for caching and cache busting */
   },
-
   module: {
-    loaders: [
+    rules: [
       {
-        test: /\.jsx?$/,
-        loader: 'babel',
+        test: /\.js$/,
         exclude: /node_modules/,
-        include: PATHS.src,
-        query: {
-          cacheDirectory: true,
-          presets: ['es2015', 'react']
-        }
+        use: 'babel-loader'
       },
       {
+        /* extract all css into a single file named by the ExtractTextPlugin (style.css) */
         test: /\.css$/,
-        loader: "style-loader!css-loader?sourceMap!postcss-loader"
-      },
-      {
-        test: /\.(png|jpg|svg|gif)$/,
-        loader: 'file-loader?name=[name].[ext]'
-      },
+        use: ExtractTextPlugin.extract({
+          fallback: "style-loader",
+          use: "css-loader"
+        })
+      }
     ]
   },
-  postcss: function() {
-    return [
-      postcssImport({
-        onImport: function (files) {
-          files.forEach(this.addDependency);
-        }.bind(this)
-      }),
-      cssnext()
-    ];
-  },
+  plugins: [
+    new ExtractTextPlugin('style.css'),
+    /*
+      Create an index.html file from the src/index.html file
+      and add our <script> and <link> tags to it
+    */
+    new HtmlWebpackPlugin({
+      template: './src/index.html'
+    }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vendor'
+    })
+  ]
 };
-
-// "start" is just the name of the script in our package.json for the
-// development server. Customize it here as necessary.
-if(process.env.npm_lifecycle_event === 'start') {
-  // We don't need or want to run hot-module-replacement code in
-  // ordinary build processes, so we'll push it into the presets stack here.
-  config.module.loaders[0].query.presets.push('react-hmre');
-
-  // Configure our development server
-  config.devServer = {
-    contentBase: __dirname,
-    hot: true,
-    progress: true,
-    stats: 'errors-only',
-    host: process.env.HOST,
-    port: process.env.PORT
-  };
-}
-
-// Good to go!
-module.exports = config;
